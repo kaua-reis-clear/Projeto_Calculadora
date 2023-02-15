@@ -26,11 +26,15 @@ class CalcController{
     }
 
     clearAll(){
-        
+        this._operation = [];
     }
 
     clearEntry(){
-        
+        this._operation.pop();
+    }
+
+    addOperation(value){
+        this._operation.push(value);
     }
 
     setError(){
@@ -70,6 +74,18 @@ class CalcController{
             case 'igual':
 
                 break;
+
+            case 0: 
+            case 1: 
+            case 2: 
+            case 3: 
+            case 4: 
+            case 5: 
+            case 6: 
+            case 7: 
+            case 8: 
+            case 9:
+                this.addOperation(parseInt(value))
 
             default:
                 this.setError();
