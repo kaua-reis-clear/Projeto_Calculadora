@@ -33,8 +33,37 @@ class CalcController{
         this._operation.pop();
     }
 
+    getLastOperation(){
+        return this._operation[this._operation.length-1]
+    }
+
+    setLastOperation(value){
+        this._operation[this._operation.length-1] = value;
+    }
+
+    isOperator(value) {
+        return (['+', '-', '*', '%', '/'].indexOf(value) > -1)
+    }
+
     addOperation(value){
-        this._operation.push(value);
+        console.log('A', isNaN(this.getLastOperation()));
+
+        if (isNaN(this.getLastOperation())){
+
+            if(this.isOperator(value)) {
+                this.setLastOperation(value);
+            } else if(isNaN(value)){
+                console.log(value);
+            } else {
+                this._operation.push(value);
+            }
+
+        } else {
+            let newValue = this.getLastOperation().toString() + value.toString();
+            this.setLastOperation(parseInt(newValue));
+        }
+
+        console.log(this._operation);
     }
 
     setError(){
@@ -52,40 +81,45 @@ class CalcController{
                 break;
             
             case 'soma':
-
+                this.addOperation('+')
                 break;
 
             case 'subtracao':
-
+                this.addOperation('-')
                 break;
                 
             case 'divisao':
-
+                this.addOperation('/')
                 break; 
 
             case 'multiplicacao':
-
+                this.addOperation('*')
                 break;
 
             case 'porcento':
-
+                this.addOperation('%')
                 break;
 
             case 'igual':
-
+                this.addOperation('=')
                 break;
 
-            case 0: 
-            case 1: 
-            case 2: 
-            case 3: 
-            case 4: 
-            case 5: 
-            case 6: 
-            case 7: 
-            case 8: 
-            case 9:
-                this.addOperation(parseInt(value))
+            case 'ponto':
+                this.addOperation('.')
+                break;
+
+            case '0': 
+            case '1': 
+            case '2': 
+            case '3': 
+            case '4': 
+            case '5': 
+            case '6': 
+            case '7': 
+            case '8': 
+            case '9':
+                this.addOperation(parseInt(value));
+                break;
 
             default:
                 this.setError();
